@@ -3,6 +3,7 @@ class GeneralFunction{
 	private $service_url = "https://restcountries.eu/rest/v2/";
 	private $lanCode = "";
 	private $cname = array();
+	private $output = array();
 	public function webServices($post){
 		// Get cURL resource
 		$curl = curl_init();
@@ -18,22 +19,29 @@ class GeneralFunction{
 		//return response
 		return $resp;
 	}
-	public function getLangCode($result){
+	public function resultExtract($result){
 		if(!empty($result)){
 			$output = json_decode($result);
+		}
+		return $output;
+	}
+	public function getLangCode($result){
+		if(!empty($result)){
+			$output = $this->resultExtract($result);
 			$this->lanCode = $output[0]->languages[0]->iso639_1;
 		}
 		return $this->lanCode;
 	}
 	public function getLangCountry($result){
 		if(!empty($result)){
-			$output = json_decode($result);
+			$output = $this->resultExtract($result);
 			if(!empty($output)){
 				foreach ($output as $op){
 					$this->cname[] = $op->name;
 				}
 			}
 		}
+		//Combined name with comma separated
 		return implode(", ",$this->cname);
 	}
 }
