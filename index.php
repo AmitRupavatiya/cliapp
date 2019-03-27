@@ -27,17 +27,16 @@ if(isset($argv) && !empty($argv[1])){
 					echo ucfirst($params[1])." and ".ucfirst($params[2]). " do not speak the same language";
 				}
 			}else{
-				$result = $GeneralFunction->webServices("name/".$params."?fullText=true");
-				echo "<pre>";print_r($result);exit;
+				$result = $GeneralFunction->webServices("name/".$params[1]."?fullText=true");
 				if(!empty($result)){
 					$lanCode = $GeneralFunction->getLangCode($result);
 					if(!empty($lanCode)){
-						echo "Country language code: ".$lanCode."<br />";
+						echo "Country language code: ".$lanCode."\r\n";
 						$results = $GeneralFunction->webServices("lang/".$lanCode);
 						if(!empty($results)){
 							$langCountry = $GeneralFunction->getLangCountry($results);
 							if(!empty($langCountry)){
-								echo ucfirst($params)." speaks same language with this countries: " .$langCountry;
+								echo ucfirst($params[1])." speaks same language with this countries: " .$langCountry;
 							}
 						}
 					}

@@ -9,10 +9,16 @@ class GeneralFunction{
 		$curl = curl_init();
 		// Set some options - we are passing in a args by user input
 		curl_setopt_array($curl, [
-			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_URL => $this->service_url.$post,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_POSTFIELDS => "",
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache"
+            ),
 		]);
-		curl_setopt($ch, CURLOPT_FAILONERROR, true);
+		curl_setopt($curl, CURLOPT_FAILONERROR, true);
 		// Send the request & save response to $resp
 		$resp = curl_exec($curl);
 		// Close request to clear up some resources
