@@ -12,6 +12,7 @@ class GeneralFunction{
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_URL => $this->service_url.$post,
 		]);
+		curl_setopt($ch, CURLOPT_FAILONERROR, true);
 		// Send the request & save response to $resp
 		$resp = curl_exec($curl);
 		// Close request to clear up some resources
